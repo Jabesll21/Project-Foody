@@ -82,5 +82,6 @@ create table platillo(
     codigo VARCHAR(5)
 )
 
+--ola
 
 
