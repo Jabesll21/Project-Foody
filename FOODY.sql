@@ -1,5 +1,6 @@
 create DATABASE FOODY
 
+--comentarioDePrueba
 use DATABASE FOODY
 
 create table factory(
