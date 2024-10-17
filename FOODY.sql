@@ -3,45 +3,45 @@ create DATABASE FOODY
 use DATABASE FOODY
 
 create table factory(
-    code VARCHAR(5)PRIMARY key not null,
-    name varchar(20) not null,
+    code VARCHAR()PRIMARY key,
+    name varchar() not null,
     tel int null,
-    e-mail VARCHAR (20) null UNIQUE,
-    streetAddr varchar (20)null,
+    e-mail VARCHAR () not null UNIQUE,
+    streetAddr varchar ()null,
     numAddr int null,
-    colonyAddr varchar(20),
+    colonyAddr varchar(),
     numberEmp int not null,
     Foreign Key (city) REFERENCES city(code)
 )
 
 create table city(
-    code VARCHAR(5) PRIMARY KEY,
-    name VARCHAR(20) not null UNIQUE
+    code VARCHAR() PRIMARY KEY,
+    name VARCHAR() not null UNIQUE
 )
 
-create table diningRoomManager(
+create table FactoryAdiministrator(
     num int PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(20) not null,
-    middleName VARCHAR(20) not null,
-    lastName VARCHAR(20) null,
+    firstName VARCHAR() not null,
+    middleName VARCHAR() not null,
+    lastName VARCHAR() null,
     tel int null,
     Foreign Key (Factory) REFERENCES Factory(code)
 )
 
 create table employee(
     num int PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(20) not null,
-    middleName VARCHAR(20) not null,
-    lastName VARCHAR(20) null,
+    firstName VARCHAR() not null,
+    middleName VARCHAR() not null,
+    lastName VARCHAR() null,
     tel int null,
-    e-mail VARCHAR(30) null UNIQUE,
+    e-mail VARCHAR() null UNIQUE,
     Foreign Key (factory) REFERENCES factory(num),
     Foreign Key (jobPosition) REFERENCES jobPosition(code)
 ) 
 
 create table jobPosition(
-    code VARCHAR (5),
-    description VARCHAR (20) UNIQUE
+    code VARCHAR (),
+    description VARCHAR () UNIQUE
 )
 
 create table order(
@@ -57,7 +57,7 @@ create table ticket(
     num int PRIMARY KEY AUTO_INCREMENT,
     total float not null,
     dateTick date not null,
-    reportStatus VARCHAR(20) not null,
+    reportStatus VARCHAR() not null,
     Foreign Key (report) REFERENCES report(num),
     Foreign Key (order) REFERENCES order(num)
 )
@@ -71,19 +71,19 @@ create table report(
 )
 
 create table status(
-    code VARCHAR(5) PRIMARY KEY,
-    description VARCHAR(5) not null
+    code VARCHAR() PRIMARY KEY,
+    description VARCHAR() not null
 )
 
 create table category(
-    code VARCHAR(5) PRIMARY KEY,
-    name VARCHAR(20)
+    code VARCHAR() PRIMARY KEY,
+    name VARCHAR()
 )
 
 create table dish(
-    code VARCHAR(5) PRIMARY KEY,
-    name VARCHAR(20) not null,
-    description VARCHAR(50) not null,
+    code VARCHAR() PRIMARY KEY,
+    name VARCHAR() not null,
+    description VARCHAR() not null,
     price float not null,
     discountPercentage not null,
     Foreign Key (category) REFERENCES category(code),
@@ -92,7 +92,7 @@ create table dish(
 
 create table ingredients(
     num int PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR (20) not NULL,
+    name VARCHAR () not NULL,
     experitionDate date not NULL
 )
 
@@ -105,33 +105,33 @@ create table purshaseOrder(
 )
 
 create table supplier(
-    code VARCHAR(5) PRIMARY KEY ,
-    name VARCHAR(20) not NULL,
+    code VARCHAR() PRIMARY KEY ,
+    name VARCHAR() not NULL,
     tel INT null,
-    e-mail VARCHAR (20) NULL UNIQUE
+    e-mail VARCHAR () NULL UNIQUE
 )
 
 create table diningRoomManager(
     num int PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(20) not NULL,
-    middleName VARCHAR (20) NOT NULL,
-    lastName VARCHAR (20) null,
+    firstName VARCHAR() not NULL,
+    middleName VARCHAR () NOT NULL,
+    lastName VARCHAR () null,
     tel INT null,
-    e-mail VARCHAR (20) null,
+    e-mail VARCHAR () null,
     Foreign Key (diningRoom) REFERENCES diningRoom(num)
 )
 
 create table diningRoom(
     num int PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(30) not NULL,
-    ubication VARCHAR(30) not NULL,
+    name VARCHAR() not NULL,
+    ubication VARCHAR() not NULL,
     Foreign Key (factory) REFERENCES factory(code)
 )
 
 create table menu(
-    code VARCHAR (5) PRIMARY KEY ,
-    name VARCHAR(30) NOT NULL,
-    description VARCHAR (30) NOT NULL
+    code VARCHAR () PRIMARY KEY ,
+    name VARCHAR() NOT NULL,
+    description VARCHAR () NOT NULL
 )
 
 create table dish_ingred(
