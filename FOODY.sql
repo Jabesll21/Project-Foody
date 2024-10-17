@@ -12,15 +12,15 @@ create table factory(
     email VARCHAR (25) null UNIQUE,
     streetAddr varchar (15)null,
     numAddr int null,
-    colonyAddr varchar(),
+    colonyAddr varchar(20),
     numberEmp int not null,
     city varchar(3) not null,
     Foreign Key (city) REFERENCES city(code)
 )
 
 create table city(
-    code VARCHAR() PRIMARY KEY,
-    name VARCHAR() not null UNIQUE
+    code VARCHAR(5) PRIMARY KEY,
+    name VARCHAR(20) not null UNIQUE
 )
 
 create table factoryAdmin(
@@ -45,9 +45,9 @@ create table diningRoomManager(
 
 create table employee(
     num int PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR() not null,
-    middleName VARCHAR() not null,
-    lastName VARCHAR() null,
+    firstName VARCHAR(20) not null,
+    middleName VARCHAR(20) not null,
+    lastName VARCHAR(20) null,
     tel int null,
     email VARCHAR(30) null UNIQUE,
     factory VARCHAR(8) not null, 
@@ -97,8 +97,8 @@ create table status(
 )
 
 create table category(
-    code VARCHAR() PRIMARY KEY,
-    name VARCHAR()
+    code VARCHAR(5) PRIMARY KEY,
+    name VARCHAR(20)
 )
 
 create table dish(
@@ -115,7 +115,7 @@ create table dish(
 
 create table ingredients(
     num int PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR () not NULL,
+    name VARCHAR (20) not NULL,
     experitionDate date not NULL
 )
 
@@ -297,10 +297,9 @@ select * from diningroommanager
 
 select * from factoryadmin
 
-/*prueba*/
+/prueba/
 
 select d.firstName, amountPayment
 from purchaseorder as p
 INNER join diningroommanager as d on p.diningroommanager = d.num
 where d.num = 3
-
