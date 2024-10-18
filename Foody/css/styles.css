@@ -44,6 +44,7 @@ body{
     opacity: 0.3;
     cursor: pointer;
     object-fit: contain;
+    background-color: #EEEEEE;
 }
 
 .icon:hover{
@@ -63,7 +64,7 @@ body{
     background-color: #9d2e1a;
   }
   .right-section {
-
+    font-size: 500px;
     background-color: #e6e6e6;
   }
   
