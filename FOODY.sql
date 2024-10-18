@@ -1,17 +1,20 @@
+-- Active: 1728454351625@@localhost@3306@foody
 create DATABASE FOODY
 
---comentarioDePrueba
-use DATABASE FOODY
+use FOODY
+
+rename table ingred_pursha to ingred_purcha
 
 create table factory(
-    code VARCHAR(5)PRIMARY key not null,
-    name varchar(20) not null,
+    code VARCHAR(8)PRIMARY key not null,
+    name varchar(16) not null,
     tel int null,
-    e-mail VARCHAR (20) null UNIQUE,
-    streetAddr varchar (20)null,
+    email VARCHAR (25) null UNIQUE,
+    streetAddr varchar (15)null,
     numAddr int null,
     colonyAddr varchar(20),
     numberEmp int not null,
+    city varchar(3) not null,
     Foreign Key (city) REFERENCES city(code)
 )
 
@@ -20,13 +23,24 @@ create table city(
     name VARCHAR(20) not null UNIQUE
 )
 
+create table factoryAdmin(
+    num int PRIMARY KEY AUTO_INCREMENT,
+    firstName VARCHAR(20) not null,
+    middleName VARCHAR(20) not null,
+    lastName VARCHAR(20) null,
+    tel int null,
+    factory varchar(8) not null,
+    Foreign Key (factory) REFERENCES factory(code)
+)
+
 create table diningRoomManager(
     num int PRIMARY KEY AUTO_INCREMENT,
     firstName VARCHAR(20) not null,
     middleName VARCHAR(20) not null,
     lastName VARCHAR(20) null,
     tel int null,
-    Foreign Key (Factory) REFERENCES Factory(code)
+    diningRoom int not null,
+    Foreign Key (diningRoom) REFERENCES diningRoom(num)
 )
 
 create table employee(
@@ -35,21 +49,25 @@ create table employee(
     middleName VARCHAR(20) not null,
     lastName VARCHAR(20) null,
     tel int null,
-    e-mail VARCHAR(30) null UNIQUE,
-    Foreign Key (factory) REFERENCES factory(num),
+    email VARCHAR(30) null UNIQUE,
+    factory VARCHAR(8) not null, 
+    jobPosition VARCHAR(5) not null,
+    Foreign Key (factory) REFERENCES factory(code),
     Foreign Key (jobPosition) REFERENCES jobPosition(code)
 ) 
 
 create table jobPosition(
-    code VARCHAR (5),
+    code VARCHAR (5) PRIMARY KEY,
     description VARCHAR (20) UNIQUE
 )
 
-create table order(
+create table orderEmp(
     num int PRIMARY KEY AUTO_INCREMENT,
     paymentAmount FLOAT not null,
     dateOrde date not null,
     totalDiscount float not null,
+    employee int not null,
+    status VARCHAR(5) not null,
     Foreign Key (employee) REFERENCES employee(num),
     Foreign Key (status) REFERENCES status(code)
 )
@@ -59,8 +77,10 @@ create table ticket(
     total float not null,
     dateTick date not null,
     reportStatus VARCHAR(20) not null,
+    report int not null,
+    orderEmp int not null,
     Foreign Key (report) REFERENCES report(num),
-    Foreign Key (order) REFERENCES order(num)
+    Foreign Key (orderEmp) REFERENCES orderEmp(num)
 )
 
 create table report(
@@ -73,7 +93,7 @@ create table report(
 
 create table status(
     code VARCHAR(5) PRIMARY KEY,
-    description VARCHAR(5) not null
+    description VARCHAR(10) not null
 )
 
 create table category(
@@ -83,10 +103,12 @@ create table category(
 
 create table dish(
     code VARCHAR(5) PRIMARY KEY,
-    name VARCHAR(20) not null,
+    name VARCHAR(50) not null,
     description VARCHAR(50) not null,
     price float not null,
-    discountPercentage not null,
+    discountPercentage float not null,
+    category VARCHAR(5) not null,
+    menu VARCHAR(5) not null,
     Foreign Key (category) REFERENCES category(code),
     Foreign Key (menu) REFERENCES menu(code)
 )
@@ -97,60 +119,60 @@ create table ingredients(
     experitionDate date not NULL
 )
 
-create table purshaseOrder(
+
+create table purchaseOrder(
     num int PRIMARY KEY AUTO_INCREMENT,
     amountPayment FLOAT not NULL,
     datePurs date not null,
-    Foreign Key (diningRoomManager) REFERENCES diningRoomManager(num),
+    diningroommanager int not null,
+    supplier VARCHAR(7) not null,
+    Foreign Key (diningroommanager) REFERENCES diningroommanager(num),
     Foreign Key (supplier) REFERENCES supplier(code)
 )
 
 create table supplier(
-    code VARCHAR(5) PRIMARY KEY ,
-    name VARCHAR(20) not NULL,
+    code VARCHAR(7) PRIMARY KEY,
+    name VARCHAR(25) not NULL,
     tel INT null,
-    e-mail VARCHAR (20) NULL UNIQUE
-)
-
-create table diningRoomManager(
-    num int PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(20) not NULL,
-    middleName VARCHAR (20) NOT NULL,
-    lastName VARCHAR (20) null,
-    tel INT null,
-    e-mail VARCHAR (20) null,
-    Foreign Key (diningRoom) REFERENCES diningRoom(num)
+    email VARCHAR (30) NULL UNIQUE
 )
 
 create table diningRoom(
     num int PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30) not NULL,
-    ubication VARCHAR(30) not NULL,
+    ubication VARCHAR(30) not null,
+    factory VARCHAR(8) not null,
     Foreign Key (factory) REFERENCES factory(code)
 )
 
 create table menu(
-    code VARCHAR (5) PRIMARY KEY ,
+    code VARCHAR (5) PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    description VARCHAR (30) NOT NULL
+    description VARCHAR (60) NOT NULL
 )
 
 create table dish_ingred(
-    numberIngred int NOT NULL,
-    PRIMARY KEY(dish,ingredients),
-    Foreign Key (dish) REFERENCES dish(code),
-    Foreign Key (ingredients) REFERENCES ingredients(num)
+    dish VARCHAR(5),
+    ingredients int,
+    numberIngred int not null,
+    PRIMARY KEY(dish, ingredients),
+    FOREIGN KEY (dish) references dish(code),
+    FOREIGN KEY (ingredients) references ingredients(num)
 )
 
 create table ingred_pursha(
+    ingredients int not null,
+    purchaseOrder int not null,
     numberIngred int NOT NULL,
-    PRIMARY KEY(ingredients,purshaseOrder),
-    Foreign Key (purshaseOrder) REFERENCES purshaseOrder(num),
+    PRIMARY KEY(ingredients,purchaseOrder),
+    Foreign Key (purchaseOrder) REFERENCES purchaseOrder(num),
     Foreign Key (ingredients) REFERENCES ingredients(num)
 )
 
 create table dining_menu(
-    PRIMARY KEY(ingredients,purshaseOrder)
+    diningRoom int not null,
+    menu VARCHAR(5) not null,
+    PRIMARY KEY(menu, diningRoom)
 )
 
 create table ord_dish(
@@ -161,25 +183,25 @@ Foreign Key (dish) REFERENCES dish(code),
 Foreign Key (order) REFERENCES order(num)
 )
 
-INSERT INTO Fabrica (codigo, nombre, tel, email, dirCalle, dirNum) VALUES
-('FERROS', 'Ferros Inc', '664-258-8677', 'ferrostijuana@gmail.com', 'Brisa', '2'),
-('ACEROS', 'Aceros del Norte', '664-158-9814', 'acerosnorte@gmail.com', 'Reforma', '5'),
-('ALUMEX', 'Alumex Corp', '664-358-4872', 'aluminiosmexico@gmail.com', 'Insurgentes', '15'),
-('MADERB', 'Maderas Benitez', '664-165-1487', 'madebenitez@gmail.com', 'Las Rosas', '14'),
-('TEXTIL', 'Textiles SA', '664-458-5759', 'textilesssa@gmail.com', 'Alameda', '12'),
-('PLASTI', 'Plastica Mex', '664-658-5478', 'plasticosmex123@gmail.com', 'Blvd. Diaz Ordaz', '10'),
-('ELECTNO', 'Electro Nova', '664-124-3257', 'electronova142@gmail.com', 'Castaños', '54'),
-('MUEBLES', 'Muebles Elvia', '663-147-8799', 'muebleselvia@gmail.com', 'Colinas', 'A-72'),
-('DULMEX', 'Dulmex Paletas', '664-849-8742', 'dulmexpaletas@gmail.com', 'Monterrey', '45'),
-('CMTNOR', 'CMT Norte', '663-422-8879', 'CMTNORTE@gmail.com', 'Jamaica', '54');
+INSERT INTO factory (code, name, tel, email, streetAddr, numAddr, colonyAddr, numberEmp, city) VALUES
+('FERROS', 'Ferros Inc', 6642588677, 'ferrostijuana@gmail.com', 'Brisa', 2, 'a',20,'TIJ'),
+('ACEROS', 'Aceros del Norte', 6641589814, 'acerosnorte@gmail.com', 'Reforma', 5,'b', 20, 'ENS'),
+('ALUMEX', 'Alumex Corp', 6643584872, 'aluminiosmexico@gmail.com','Insurgentes', 15,'c',20, 'TIJ'),
+('MADERB', 'Maderas Benitez', 6641651487, 'madebenitez@gmail.com', 'Las Rosas', 14,'d', 20, 'ROS'),
+('TEXTIL', 'Textiles SA', 6644585759, 'textilesssa@gmail.com','Alameda', 12 ,'e',20, 'MEX'),
+('PLASTI', 'Plastica Mex', 6646585478, 'plasticosmex123@gmail.com','Blvd. Diaz Ordaz', 10 ,'f',20,'TIJ'),
+('ELECTNO', 'Electro Nova', 6641243257, 'electronova142@gmail.com', 'Castaños', 54,'g',20, 'TIJ'),
+('MUEBLES', 'Muebles Elvia', 6631478799, 'muebleselvia@gmail.com', 'Colinas', 72,'h', 20, 'ENS'),
+('DULMEX', 'Dulmex Paletas', 6648498742, 'dulmexpaletas@gmail.com','Monterrey', 45,'i', 20, 'ROS'),
+('CMTNOR', 'CMT Norte', 6634228879, 'CMTNORTE@gmail.com', 'Jamaica', 54, 'j', 20, 'MEX');
 
-insert into ciudad(codigo,nombre) VALUES
+insert into city(code,) VALUES
 ("TIJ","Tijuana"),
 ("MEX","Mexicali"),
 ("ENS","Ensenada"),
 ("ROS","Rosarito");
 
-INSERT INTO administradorFabrica (num, nombrePila, apePat, apeMat, tel, fabrica) VALUES
+INSERT INTO factoryAdmin(num, firstName, middleName, lastName, tel, factory) VALUES
 (1, 'Javier', 'Diaz', 'Molina', '664-574-8912', 'FERROS'),
 (2, 'Ernesto', 'Mendoza', 'Cardenas', '664-741-9988', 'ACEROS'),
 (3, 'Marta', 'Figueroa', 'Castro', '664-158-7441', 'ALUMEX'),
@@ -191,7 +213,7 @@ INSERT INTO administradorFabrica (num, nombrePila, apePat, apeMat, tel, fabrica)
 (9, 'Genaro', 'Brito', 'Canales', '664-021-1470', 'DULMEX'),
 (10, 'Josefa', 'Hernandez', 'Ochoa', '663-799-1481', 'CMTNOR');
 
-INSERT INTO empleado (num, nombrePila, apePat, apeMat, tel, correo) VALUES
+INSERT INTO employee(num, nombrePila, apePat, apeMat, tel, correo) VALUES
 (1, 'Santiago', 'Garcia', 'Roman', '664-421-6897', 'santiago.Garcia@gmail.com'),
 (2, 'Luis', 'Rodríguez', 'Sorte', '664-711-6666', 'luis.Rodríguez@gmail.com'),
 (3, 'Marta', 'Martínez', 'Mendoza', '664-117-8531', 'marta.Martínez@gmail.com'),
@@ -242,5 +264,42 @@ INSERT INTO empleado (num, nombrePila, apePat, apeMat, tel, correo) VALUES
 (48, 'Samuel', 'Molina', 'Coronado', '664-784-9386', 'samuel.Molina@gmail.com'),
 (49, 'Sonia', 'Orozco', 'Trujillo', '663-148-3715', 'sonia.Orozco@gmail.com');
 
+insert into diningRoom(name, ubication, factory)
+VALUES
+('Comiditas', 'area de comida', 'FERROS')
+
+insert into diningroommanager(firstName, middleName, lastName, tel, diningroom)
+values
+('Julio', 'Camejo', 'Ortega', 6641870158, 1 )
+
+insert into diningroommanager(firstName, middleName, lastName, tel, diningroom)
+VALUES
+('Juan', 'Martinez', 'Garcia', 6641871282, 2 )
+
+insert into supplier(code, name, tel, email)
+values('carne', 'Carniceria los pepes', 6641644789, 'carniceria.lospepes@gmail.com')
+
+insert into purchaseOrder(amountPayment, datePurs, diningroommanager, supplier)
+values(500, '2024-10-02', 1, 'carne' )
+
+insert into purchaseorder(amountPayment, datePurs, diningroommanager, supplier)
+values(420, '2024-10-02', 3, 'carne')
 
 
+ALTER TABLE purchaseOrder
+ADD CONSTRAINT diningroommanager
+FOREIGN KEY (diningroommanager) REFERENCES diningroommanager(num);
+
+
+select * from supplier
+
+select * from diningroommanager
+
+select * from factoryadmin
+
+/prueba/
+
+select d.firstName, amountPayment
+from purchaseorder as p
+INNER join diningroommanager as d on p.diningroommanager = d.num
+where d.num = 3

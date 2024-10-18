@@ -1,3 +1,4 @@
+
 * {
     padding: 0;
     margin: 0;
@@ -38,6 +39,7 @@ body {
 }
 
 .menu .navbar ul li {
+    margin-left: 20px;
     position: relative;
     float: left;
 }
@@ -112,8 +114,8 @@ h1 {
 
 .card-product{
     background-color: #ffff;
-    padding: 2rem 3rem;
-    border-radius: 5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
     cursor: pointer;
     box-shadow: 0 0 .2px rgb(0, 0, 0, 0.1);
 }
@@ -126,6 +128,14 @@ h1 {
     width: 100%;
 }
 
+.container-img-reservation img{
+    width: 40%; /* Ajusta este valor para cambiar el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block;
+    margin: 0 auto;
+}
+
+
 .container-img .discount{
     position: absolute;
     left: 0;
@@ -137,7 +147,7 @@ h1 {
 }
 
 .card-product:hover .discount{
-    background-color: #000;
+    background-color: #fff;
 }
 
 .button-group{
@@ -269,4 +279,97 @@ h1 {
     border-radius: 1px; /* Bordes redondeados en la línea */
 }
 
+
+
+.top-products{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.container-options{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.container-options span{
+    color: #fff;
+    background-color: #3c1e15;
+    padding: .7rem 3rem;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.container-options span:hover{
+    transition: background-color.4s, ease-in-out;
+    background-color: #806044;
+    color: #fff;
+}
+
+
+.container-options span.active{
+    background-color: #D4211C;
+    color: #fff;
+}
+
+.container-options-cancel span{
+    color: #fff;
+    background-color: #3c1e15;
+    padding: .7rem 3rem;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.container-options-cancel{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+.container-options-cancel span:hover{
+    transition: background-color.4s, ease-in-out;
+    background-color: #D4211C;
+    color: #fff;
+}
+
+.container-options-cancel span.active{
+    transition: background-color.4s, ease-in-out;
+    background-color: #D4211C;
+    color: #fff;
+}
+
+.cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: #000; /* Ajusta el color del ícono del carrito */
+    margin-left: auto; /* Hace que el carrito se alinee a la derecha */
+    margin-right: 20px; /* Ajusta el espaciado entre el carrito y el borde derecho */
+    cursor: pointer;
+}
+
+/* Estilos para el número de productos en el carrito */
+
+
+.menu .navbar ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 991px) {
+    .cart-icon {
+        font-size: 20px;
+        margin-left: 10px;
+    }
+}
 
