@@ -5,6 +5,7 @@ use FOODY
 
 rename table ingred_pursha to ingred_purcha
 
+
 create table factory(
     code VARCHAR(8)PRIMARY key not null,
     name varchar(16) not null,
@@ -178,10 +179,14 @@ create table dining_menu(
 create table ord_dish(
 numberDishes int NOT NULL,
 amount int NOT NULL,
-PRIMARY KEY(dish,order)
+dish VARCHAR(5) NOT NULL,
+orderemp int NOT NULL,
+PRIMARY KEY(dish,orderemp),
 Foreign Key (dish) REFERENCES dish(code),
-Foreign Key (order) REFERENCES order(num)
+Foreign Key (orderemp) REFERENCES orderemp(num)
 )
+
+
 
 INSERT INTO factory (code, name, tel, email, streetAddr, numAddr, colonyAddr, numberEmp, city) VALUES
 ('FERROS', 'Ferros Inc', 6642588677, 'ferrostijuana@gmail.com', 'Brisa', 2, 'a',20,'TIJ'),
@@ -213,56 +218,77 @@ INSERT INTO factoryAdmin(num, firstName, middleName, lastName, tel, factory) VAL
 (9, 'Genaro', 'Brito', 'Canales', '664-021-1470', 'DULMEX'),
 (10, 'Josefa', 'Hernandez', 'Ochoa', '663-799-1481', 'CMTNOR');
 
-INSERT INTO employee(num, nombrePila, apePat, apeMat, tel, correo) VALUES
-(1, 'Santiago', 'Garcia', 'Roman', '664-421-6897', 'santiago.Garcia@gmail.com'),
-(2, 'Luis', 'Rodríguez', 'Sorte', '664-711-6666', 'luis.Rodríguez@gmail.com'),
-(3, 'Marta', 'Martínez', 'Mendoza', '664-117-8531', 'marta.Martínez@gmail.com'),
-(4, 'Ángel', 'López', 'Chávez', '664-871-5471', 'angel.López@gmail.com'),
-(5, 'Carmen', 'González', 'Aguilar', '664-578-1245', 'carmen.González@gmail.com'),
-(6, 'Fernando', 'Pérez', 'Rojas', '664-125-2549', 'hernán.Pérez@gmail.com'),
-(7, 'Antonia', 'Sánchez', 'Medina', '664-478-6655', 'antonia.Sánchez@gmail.com'),
-(8, 'Rodrigo', 'Ramírez', 'Delgado', '664-887-1478', 'rodrigo.Ramírez@gmail.com'),
-(9, 'Norma', 'Torres', 'Soto', '664-378-1211', 'norma.Torres@gmail.com'),
-(10, 'Eduardo', 'Flores', 'Vega', '664-422-5314', 'eduardo.Flores@gmail.com'),
-(11, 'Fabiana', 'Rivera', 'Silva', '664-713-4745', 'fabiana.Rivera@gmail.com'),
-(12, 'Sebastián', 'Gómez', 'Salazar', '644-332-1078', 'sebastián.Gómez@gmail.com'),
-(13, 'Maribel', 'Díaz', 'León', '664-137-8799', 'maribel.Díaz@gmail.com'),
-(14, 'Iván', 'Vázquez', 'Cruz', '663-555-6871', 'iván.Vázquez@gmail.com'),
-(15, 'Paloma', 'Romero', 'Navarro', '664-571-8125', 'paloma.Romero@gmail.com'),
-(16, 'Rafael', 'Herrera', 'Fuentes', '664-357-4785', 'rafael.Herrera@gmail.com'),
-(17, 'Juana', 'Castro', 'Paredes', '664-745-6541', 'juana.Castro@gmail.com'),
-(18, 'Mateo', 'Domínguez', 'Ramos', '664-141-9873', 'mateo.Domínguez@gmail.com'),
-(19, 'Claudia', 'Morales', 'Valencia', '664-423-4777', 'claudia.Morales@gmail.com'),
-(20, 'Tomás', 'Ortiz', 'Acosta', '664-879-6517', 'tomas.Ortiz@gmail.com'),
-(21, 'Fátima', 'Ruiz', 'Molina', '664-748-2311', 'fátima.Ruiz@gmail.com'),
-(22, 'Jorge', 'Jiménez', 'Orozco', '664-879-8999', 'jorge.Jiménez@gmail.com'),
-(23, 'Pilar', 'Mendoza', 'Ponce', '664-171-1781', 'pilar.Mendoza@gmail.com'),
-(24, 'Damián', 'Chávez', 'Serrano', '664-877-9983', 'damián.Chávez@gmail.com'),
-(25, 'Vanessa', 'Aguilar', 'Miranda', '664-875-2214', 'vanesa.Aguilar@gmail.com'),
-(26, 'Lucas', 'Rojas', 'Cárdenas', '664-147-1556', 'lucas.Rojas@gmail.com'),
-(27, 'Cristina', 'Medina', 'Esquivel', '664-744-1444', 'cristina.Medina@gmail.com'),
-(28, 'Joaquín', 'Delgado', 'Barrios', '664-111-9874', 'joaquín.Delgado@gmail.com'),
-(29, 'Selene', 'Soto', 'Reyes', '664-874-9386', 'selene.Soto@gmail.com'),
-(30, 'Hugo', 'Vega', 'Palacios', '664-478-1236', 'hugo.Vega@gmail.com'),
-(31, 'Jimena', 'Silva', 'Bautista', '664-774-2356', 'jimena.Silva@gmail.com'),
-(32, 'Bruno', 'Salazar', 'Zamora', '664-387-9511', 'bruno.Salazar@gmail.com'),
-(33, 'Regina', 'León', 'Castañeda', '664-144-4786', 'regina.León@gmail.com'),
-(34, 'Esteban', 'Cruz', 'Ramos', '664-897-5751', 'esteban.Cruz@gmail.com'),
-(35, 'Almudena', 'Navarro', 'Luna', '664-845-2312', 'almudena.Navarro@gmail.com'),
-(36, 'César', 'Fuentes', 'Villanueva', '664-447-4777', 'césar.Fuentes@gmail.com'),
-(37, 'Gloria', 'Paredes', 'Montes', '664-784-7176', 'gloria.Paredes@gmail.com'),
-(38, 'Alexis', 'Ramos', 'Lara', '664-485-7892', 'alexis.Ramos@gmail.com'),
-(39, 'Sabrina', 'Valencia', 'Montero', '664-784-2344', 'sabrina.Valencia@gmail.com'),
-(40, 'Guillermo', 'Acosta', 'Mora', '664-838-2241', 'guillermo.Acosta@gmail.com'),
-(41, 'Aitana', 'Sandoval', 'Olivares', '664-478-1161', 'aitana.Sandoval@gmail.com'),
-(42, 'Lorenzo', 'Peña', 'Salinas', '664-758-4561', 'lorenzo.Peña@gmail.com'),
-(43, 'Melissa', 'Escobar', 'Cordero', '664-585-8144', 'melisa.Escobar@gmail.com'),
-(44, 'Álvaro', 'Carrillo', 'Nuñez', '664-831-6937', 'álvaro.Carrillo@gmail.com'),
-(45, 'Rosario', 'Muñoz', 'Aguirre', '664-788-6191', 'rosario.Muñoz@gmail.com'),
-(46, 'Enrique', 'Vázquez', 'Peralta', '663-742-5487', 'enrique.Vázquez@gmail.com'),
-(47, 'Daniela', 'Vargas', 'Santiago', '664-231-6741', 'daniela.Vargas@gmail.com'),
-(48, 'Samuel', 'Molina', 'Coronado', '664-784-9386', 'samuel.Molina@gmail.com'),
-(49, 'Sonia', 'Orozco', 'Trujillo', '663-148-3715', 'sonia.Orozco@gmail.com');
+INSERT INTO employee(num, firstName, middleName, lastName, tel, email, factory, jobposition)
+VALUES
+(1,'Santiago','García','Roman', 6644216897, 'santiago.García@gmail.com', 'DULMEX', 'OPRD'),
+(2,'Luis','Rodríguez','Sorte', 6647116666, 'luis.Rodríguez@gmail.com', 'FERROS', 'OPRC'),
+(3,'Marta','Martínez','Mendoza', 6641178531, 'marta.Martínez@gmail.com', 'FERROS', 'INGN'),
+(4,'Ángel','López','Chávez', 6648715471, 'ángel.López@gmail.com', 'FERROS', 'SCRT'),
+(5,'Carmen','González','Aguilar', 6645781245, 'carmen.González@gmail.com', 'FERROS', 'GRNT'),
+(6,'Hernán','Pérez','Rojas', 6641252549, 'hernán.Pérez@gmail.com', 'FERROS', 'ASTN'),
+(7,'Antonia','Sánchez','Medina', 6644786655, 'antonia.Sánchez@gmail.com', 'FERROS', 'SPVR'),
+(8,'Rodrigo','Ramírez','Delgado', 6648871478, 'rodrigo.Ramírez@gmail.com', 'FERROS', 'INTN'),
+(9,'Norma','Torres','Soto', 6634785211, 'norma.Torres@gmail.com', 'FERROS', 'OPRD'),
+(10,'Eduardo','Flores','Vega', 6642317743, 'eduardo.Flores@gmail.com', 'FERROS', 'OPRC'),
+(11,'Fabiana','Rivera','Silva', 6641784785, 'fabiana.Rivera@gmail.com', 'DULMEX', 'INGN'),
+(12,'Sebastián','Gómez','Salazar', 6443321476, 'sebastián.Gómez@gmail.com', 'DULMEX', 'SCRT'),
+(13,'Maribel','Díaz','León', 6641478793, 'maribel.Díaz@gmail.com', 'ACEROS', 'GRNT'),
+(14,'Iván','Vázquez','Cruz', 6635556871, 'iván.Vázquez@gmail.com', 'ACEROS', 'ASTN'),
+(15,'Paloma','Romero','Navarro', 6645718745, 'paloma.Romero@gmail.com', 'ACEROS', 'SPVR'),
+(16,'Rafael','Herrera','Fuentes', 6634578125, 'rafael.Herrera@gmail.com', 'ACEROS', 'INTN'),
+(17,'Juana','Castro','Paredes', 6647486541, 'juana.Castro@gmail.com', 'ACEROS', 'OPRD'),
+(18,'Mateo','Domínguez','Ramos', 6644419873, 'mateo.Domínguez@gmail.com', 'ACEROS', 'OPRC'),
+(19,'Claudia','Morales','Valencia', 6641234777, 'claudia.Morales@gmail.com', 'ACEROS', 'INGN'),
+(20,'Tomás','Ortiz','Acosta', 6648796551, 'tomás.Ortiz@gmail.com', 'ACEROS', 'SCRT'),
+(21,'Fátima','Ruiz','Molina', 6647483214, 'fátima.Ruiz@gmail.com', 'ACEROS', 'GRNT'),
+(22,'Jorge','Jiménez','Orozco', 6648798899, 'jorge.Jiménez@gmail.com', 'DULMEX', 'ASTN'),
+(23,'Pilar','Mendoza','Ponce', 6641717781, 'pilar.Mendoza@gmail.com', 'DULMEX', 'SPVR'),
+(24,'Damián','Chávez','Serrano', 6647779983, 'damián.Chávez@gmail.com', 'ALUMEX', 'INTN'),
+(25,'Vanessa','Aguilar','Miranda', 6648752214, 'vanessa.Aguilar@gmail.com', 'ALUMEX', 'OPRD'),
+(26,'Lucas','Rojas','Rivas', 6641475856, 'lucas.Rojas@gmail.com', 'ALUMEX', 'OPRC'),
+(27,'Cristina','Medina','Cárdenas', 6647481444, 'cristina.Medina@gmail.com', 'ALUMEX', 'INGN'),
+(28,'Joaquín','Delgado','Esquivel', 6641119874, 'joaquín.Delgado@gmail.com', 'ALUMEX', 'SCRT'),
+(29,'Selene','Soto','Barrios', 6648987412, 'selene.Soto@gmail.com', 'ALUMEX', 'GRNT'),
+(30,'Hugo','Vega','Reyes', 6648749886, 'hugo.Vega@gmail.com', 'ALUMEX', 'ASTN'),
+(31,'Jimena','Silva','Palacios', 6647881236, 'jimena.Silva@gmail.com', 'ALUMEX', 'SPVR'),
+(32,'Bruno','Salazar','Bautista', 6647772556, 'bruno.Salazar@gmail.com', 'ALUMEX', 'INTN'),
+(33,'Regina','León','Zamora', 6641444786, 'regina.León@gmail.com', 'DULMEX', 'OPRD'),
+(34,'Esteban','Cruz','Castañeda', 6648918745, 'esteban.Cruz@gmail.com', 'DULMEX', 'OPRC'),
+(35,'Almudena','Navarro','Luna', 6648452132, 'almudena.Navarro@gmail.com', 'MADERB', 'INGN'),
+(36,'César','Fuentes','Villanueva', 6644477851, 'césar.Fuentes@gmail.com', 'MADERB', 'SCRT'),
+(37,'Gloria','Paredes','Montes', 6647844712, 'gloria.Paredes@gmail.com', 'MADERB', 'GRNT'),
+(38,'Alexis','Ramos','Lara', 6644857892, 'alexis.Ramos@gmail.com', 'MADERB', 'ASTN'),
+(39,'Sabrina','Valencia','Montero', 6647844444, 'sabrina.Valencia@gmail.com', 'MADERB', 'SPVR'),
+(40,'Guillermo','Acosta','Mora', 6448882241, 'guillermo.Acosta@gmail.com', 'MADERB', 'INTN'),
+(41,'Aitana','Sandoval','Olivares', 6641471147, 'aitana.Sandoval@gmail.com', 'MADERB', 'OPRD'),
+(42,'Lorenzo','Peña','Salinas', 6647884561, 'lorenzo.Peña@gmail.com', 'MADERB', 'OPRC'),
+(43,'Melisa','Escobar','Cordero', 6645556841, 'melisa.Escobar@gmail.com', 'MADERB', 'INGN'),
+(44,'Álvaro','Carrillo','Núñez', 6648816937, 'álvaro.Carrillo@gmail.com', 'DULMEX', 'SCRT'),
+(45,'Rosario','Márquez','Aguirre', 6641427411, 'rosario.Márquez@gmail.com', 'CMTNOR', 'GRNT'),
+(46,'Enrique','Valdez','Peralta', 6637485487, 'enrique.Valdez@gmail.com', 'TEXTIL', 'ASTN'),
+(47,'Daniela','Vargas','Santiago', 6634216741, 'daniela.Vargas@gmail.com', 'TEXTIL', 'SPVR'),
+(48,'Samuel','Molina','Coronado', 6648448745, 'samuel.Molina@gmail.com', 'TEXTIL', 'INTN'),
+(49,'Sonia','Orozco','Trujillo', 6631484718, 'sonia.Orozco@gmail.com', 'TEXTIL', 'OPRD'),
+(50,'Marcelo','Ponce','Figueroa', 6634711123, 'marcelo.Ponce@gmail.com', 'TEXTIL', 'OPRC'),
+(51,'Rosaura','Serrano','Padilla', 6647311124, 'rosaura.Serrano@gmail.com', 'TEXTIL', 'INGN'),
+(52,'Julia','Miranda','Quiroz', 6635474785, 'julia.Miranda@gmail.com', 'TEXTIL', 'SCRT'),
+(53,'Mireya','Rivas','Barrera', 6639879999, 'mireya.Rivas@gmail.com', 'TEXTIL', 'GRNT'),
+(54,'Alicia','Cárdenas','Espinoza', 6649891578, 'alicia.Cárdenas@gmail.com', 'TEXTIL','ASTN')
+
+INSERT INTO employee(num, firstName, middleName, lastName, tel, email, factory, jobposition)
+VALUES
+(55,'Yolanda','Esquivel', 'Meza',6648791451,'yolanda.Esquivel@gmail.com','CMTNOR','SPVR'),
+
+/*INSERT en la tabla de jobposition*/
+LOAD DATA LOCAL INFILE 'C:/Users/User/Desktop/UTT/BaseDeDatos/ImporteTablas/tablaJobposition.csv'
+INTO TABLE jobposition
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n' 
+IGNORE 1 LINES 
+(code,description);
+
+select * from employee
 
 insert into diningRoom(name, ubication, factory)
 VALUES
@@ -297,9 +323,14 @@ select * from diningroommanager
 
 select * from factoryadmin
 
+select * from factory
+
+select * from employee
+
 /prueba/
 
 select d.firstName, amountPayment
 from purchaseorder as p
 INNER join diningroommanager as d on p.diningroommanager = d.num
 where d.num = 3
+
