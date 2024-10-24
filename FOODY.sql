@@ -177,15 +177,32 @@ create table dining_menu(
 )
 
 create table ord_dish(
-numberDishes int NOT NULL,
-amount int NOT NULL,
-dish VARCHAR(5) NOT NULL,
-orderemp int NOT NULL,
-PRIMARY KEY(dish,orderemp),
-Foreign Key (dish) REFERENCES dish(code),
-Foreign Key (orderemp) REFERENCES orderemp(num)
+    numberDishes int NOT NULL,
+    amount int NOT NULL,
+    dish VARCHAR(5) NOT NULL,
+    orderemp int NOT NULL,
+    PRIMARY KEY(dish,orderemp),
+    Foreign Key (dish) REFERENCES dish(code),
+    Foreign Key (orderemp) REFERENCES orderemp(num)
 )
 
+create table menu_type(
+    num int PRIMARY KEY AUTO_INCREMENT,
+    description VARCHAR(10) not null,
+    start_time TIME not null,
+    end_time TIME not null
+)
+
+/*agrego la fk de menu_type a menu*/
+ALTER TABLE menu
+ADD COLUMN type_menu int not null
+
+ALTER TABLE menu
+CHANGE COLUMN type_menu menu_type int not null
+
+ALTER TABLE menu
+ADD CONSTRAINT menu_type
+FOREIGN KEY (menu_type) REFERENCES menu_type(num);
 
 
 INSERT INTO factory (code, name, tel, email, streetAddr, numAddr, colonyAddr, numberEmp, city) VALUES
@@ -277,7 +294,70 @@ VALUES
 
 INSERT INTO employee(num, firstName, middleName, lastName, tel, email, factory, jobposition)
 VALUES
-(55,'Yolanda','Esquivel', 'Meza',6648791451,'yolanda.Esquivel@gmail.com','CMTNOR','SPVR'),
+(55, 'Yolanda', 'Esquivel', 'Meza', 6648791451, 'yolanda.Esquivel@gmail.com', 'CMTNOR', 'SPVR'),
+(56, 'Magdalena', 'Barrios', 'Gutiérrez', 6634154711, 'magdalena.Barrios@gmail.com', 'CMTNOR', 'INTN'),
+(57, 'Belén', 'Reyes', 'Maldonado', 6645541785, 'belén.Reyes@gmail.com', 'PLASTI', 'OPRD'),
+(58, 'Norma', 'Palacios', 'Naranjo', 6648799994, 'norma.Palacios@gmail.com', 'PLASTI', 'OPRC'),
+(59, 'Elsa', 'Bautista', 'Ochoa', 6634857412, 'elsa.Bautista@gmail.com', 'PLASTI', 'INGN'),
+(60, 'Marisol', 'Zamora', 'Olmedo', 6647679983, 'marisol.Zamora@gmail.com', 'PLASTI', 'SCRT'),
+(61, 'Julieta', 'Castañeda', 'Escamilla', 6648752414, 'julieta.Castañeda@gmail.com', 'PLASTI', 'GRNT'),
+(62, 'Estela', 'Luna', 'Domínguez', 6641175856, 'estela.Luna@gmail.com', 'PLASTI', 'ASTN'),
+(63, 'Rafael', 'Villanueva', 'Marín', 6647481444, 'rafael.Villanueva@gmail.com', 'PLASTI', 'SPVR'),
+(64, 'Juana', 'Montes', 'Velasco', 6641009874, 'juana.Montes@gmail.com', 'PLASTI', 'INTN'),
+(65, 'Mateo', 'Lara', 'Morales', 6648987412, 'mateo.Lara@gmail.com', 'PLASTI', 'OPRD'),
+(66, 'Claudia', 'Montero', 'Morales', 6648009006, 'claudia.Montero@gmail.com', 'CMTNOR', 'OPRC'),
+(67, 'Tomás', 'Cabrera', 'Tejada', 6647881236, 'tomás.Cabrera@gmail.com', 'CMTNOR', 'INGN'),
+(68, 'Fátima', 'Valencia', 'Juárez', 6637102556, 'fátima.Valencia@gmail.com', 'ELECTNO', 'SCRT'),
+(69, 'Jorge', 'Campos', 'Fernández', 6631444786, 'jorge.Campos@gmail.com', 'ELECTNO', 'GRNT'),
+(70, 'Pilar', 'Carrasco', 'Cerezo', 6638918745, 'pilar.Carrasco@gmail.com', 'ELECTNO', 'ASTN'),
+(71, 'Damián', 'Suárez', 'Carrillo', 6638452132, 'damián.Suárez@gmail.com', 'ELECTNO', 'SPVR'),
+(72, 'Vanessa', 'Moya', 'Méndez', 6644477851, 'vanessa.Moya@gmail.com', 'ELECTNO', 'INTN'),
+(73, 'Lucas', 'Bravo', 'Mendoza', 6647844712, 'lucas.Bravo@gmail.com', 'ELECTNO', 'OPRD'),
+(74, 'Cristina', 'Velázquez', 'Romero', 6644857892, 'cristina.Velázquez@gmail.com', 'ELECTNO', 'OPRC'),
+(75, 'Joaquín', 'Mora', 'Santiago', 6637844422, 'joaquín.Mora@gmail.com', 'ELECTNO', 'INGN'),
+(76, 'Selene', 'Olivares', 'Coronado', 6645814712, 'selene.Olivares@gmail.com', 'ELECTNO', 'OPRD'),
+(77, 'Hugo', 'Salinas', 'Trujillo', 6631472541, 'hugo.Salinas@gmail.com', 'CMTNOR', 'OPRC'),
+(78, 'Jimena', 'Cordero', 'Figueroa', 6337898591, 'jimena.Cordero@gmail.com', 'CMTNOR', 'INGN'),
+(79, 'Bruno', 'Núñez', 'Padilla', 6647889881, 'bruno.Núñez@gmail.com', 'MUEBLES', 'SCRT'),
+(80, 'Regina', 'Aguirre', 'Quiroz', 6641756891, 'regina.Aguirre@gmail.com', 'MUEBLES', 'GRNT'),
+(81, 'Esteban', 'Peralta', 'Barrera', 6637758473, 'esteban.Peralta@gmail.com', 'MUEBLES', 'ASTN'),
+(82, 'Almudena', 'Santiago', 'Espinoza', 6647899998, 'almudena.Santiago@gmail.com', 'MUEBLES', 'SPVR'),
+(83, 'César', 'Coronado', 'Meza', 6648855412, 'césar.Coronado@gmail.com', 'MUEBLES', 'INTN'),
+(84, 'Gloria', 'Trujillo', 'Gutiérrez', 6648527784, 'gloria.Trujillo@gmail.com', 'MUEBLES', 'OPRD'),
+(85, 'Alexis', 'Figueroa', 'Maldonado', 6637482142, 'alexis.Figueroa@gmail.com', 'MUEBLES', 'OPRC'),
+(86, 'Sabrina', 'Padilla', 'Naranjo', 6645447481, 'sabrina.Padilla@gmail.com', 'MUEBLES', 'INGN'),
+(87, 'Guillermo', 'Quiroz', 'Ochoa', 6647719712, 'guillermo.Quiroz@gmail.com', 'MUEBLES', 'SCRT'),
+(88, 'Aitana', 'Barrera', 'Olmedo', 6641476555, 'aitana.Barrera@gmail.com', 'DULMEX', 'GRNT'),
+(89, 'Lorenzo', 'Espinoza', 'Acosta', 6645749855, 'lorenzo.Espinoza@gmail.com', 'DULMEX', 'ASTN'),
+(90, 'Melisa', 'Meza', 'Sandoval', 6648578974, 'melisa.Meza@gmail.com', 'DULMEX', 'SPVR'),
+(91, 'Álvaro', 'Gutiérrez', 'Peña', 6647854101, 'álvaro.Gutiérrez@gmail.com', 'DULMEX', 'INTN'),
+(92, 'Rosario', 'Maldonado', 'Escobar', 6640078802, 'rosario.Maldonado@gmail.com', 'DULMEX', 'OPRD'),
+(93, 'Enrique', 'Naranjo', 'Carrillo', 6641102145, 'enrique.Naranjo@gmail.com', 'DULMEX', 'OPRC'),
+(94, 'Daniela', 'Ochoa', 'Márquez', 6637845855, 'daniela.Ochoa@gmail.com', 'DULMEX', 'INGN'),
+(95, 'Samuel', 'Olmedo', 'Valdez', 6645746118, 'samuel.Olmedo@gmail.com', 'DULMEX', 'OPRD'),
+(96, 'Sonia', 'Escamilla', 'Vargas', 6641148807, 'sonia.Escamilla@gmail.com', 'DULMEX', 'OPRC'),
+(97, 'Marcelo', 'Domínguez', 'Molina', 6649892555, 'marcelo.Domínguez@gmail.com', 'DULMEX', 'OPRD'),
+(98, 'América', 'Marín', 'Orozco', 6644789899, 'america.Marín@gmail.com', 'DULMEX', 'OPRC'),
+(99, 'Román', 'Velasco', 'Ponce', 6642221121, 'roman.Velasco@gmail.com', 'CMTNOR', 'INGN'),
+(100, 'Juan', 'Morales', 'Serrano', 6642217789, 'juan.Morales@gmail.com', 'CMTNOR', 'SCRT'),
+(101, 'Marcos', 'Morales', 'Miranda', 6647891110, 'marcos.Morales@gmail.com', 'CMTNOR', 'GRNT'),
+(102, 'Daniel', 'Tejada', 'Rivas', 6630024101, 'daniel.Tejada@gmail.com', 'CMTNOR', 'ASTN'),
+(103, 'Pedro', 'Juárez', 'Cárdenas', 6631875154, 'pedro.Juárez@gmail.com', 'CMTNOR', 'SPVR'),
+(104, 'José', 'Fernández', 'Bermúdez', 6637100999, 'jose.Fernández@gmail.com', 'CMTNOR', 'INTN'),
+(105, 'Armando', 'Rincón', 'Guerrero', 6643124411, 'armando.Rincón@gmail.com', 'CMTNOR', 'OPRD'),
+(106, 'Rosendo', 'Galindo', 'Cervantes', 6634658503, 'rosendo.Galindo@gmail.com', 'CMTNOR', 'OPRC'),
+(107, 'Ismael', 'Rivas', 'Martínez', 6647888654, 'ismael.Rivas@gmail.com', 'CMTNOR', 'INGN'),
+(108, 'Fernando', 'Carmona', 'Torres', 6645498745, 'fernando.Carmona@gmail.com', 'CMTNOR', 'SCRT'),
+(109, 'Gabriela', 'Salinas', 'Castillo', 6647256631, 'gabriela.Salinas@gmail.com', 'CMTNOR', 'GRNT'),
+(110, 'Octavio', 'Mendoza', 'Vidal', 6648642515, 'octavio.Mendoza@gmail.com', 'CMTNOR', 'ASTN'),
+(111, 'Silvia', 'Hernández', 'Fuentes', 6649562243, 'silvia.Hernández@gmail.com', 'CMTNOR', 'SPVR'),
+(112, 'María', 'Núñez', 'Delgado', 6645554123, 'maría.Núñez@gmail.com', 'CMTNOR', 'INTN'),
+(113, 'Diego', 'Flores', 'Hernández', 6648845472, 'diego.Flores@gmail.com', 'CMTNOR', 'OPRD'),
+(114, 'Sergio', 'Duarte', 'Pérez', 6648884413, 'sergio.Duarte@gmail.com', 'CMTNOR', 'OPRC'),
+(115, 'Susana', 'Pérez', 'Armenta', 6647564418, 'susana.Pérez@gmail.com', 'CMTNOR', 'INGN');
+
+
+
 
 /*INSERT en la tabla de jobposition*/
 LOAD DATA LOCAL INFILE 'C:/Users/User/Desktop/UTT/BaseDeDatos/ImporteTablas/tablaJobposition.csv'
