@@ -3,6 +3,8 @@ create DATABASE FOODY
 
 use FOODY
 
+drop database FOODY
+
 rename table ingred_pursha to ingred_purcha
 
 ALTER TABLE factoryadmin MODIFY tel VARCHAR(10);
@@ -16,13 +18,13 @@ ALTER TABLE employee MODIFY tel VARCHAR(10);
 create table factory(
     code VARCHAR(8)PRIMARY key not null,
     name varchar(16) not null,
-    tel int null,
+    tel VARCHAR(10),
     email VARCHAR (25) null UNIQUE,
     streetAddr varchar (15)null,
     numAddr int null,
     colonyAddr varchar(20),
     numberEmp int not null,
-    city varchar(3) not null,
+    city varchar(5) not null,
     Foreign Key (city) REFERENCES city(code)
 )
 
@@ -36,7 +38,7 @@ create table factoryAdmin(
     firstName VARCHAR(20) not null,
     middleName VARCHAR(20) not null,
     lastName VARCHAR(20) null,
-    tel int null,
+    tel VARCHAR(10),
     factory varchar(8) not null,
     Foreign Key (factory) REFERENCES factory(code)
 )
@@ -46,7 +48,7 @@ create table diningRoomManager(
     firstName VARCHAR(20) not null,
     middleName VARCHAR(20) not null,
     lastName VARCHAR(20) null,
-    tel int null,
+    tel VARCHAR(10),
     diningRoom int not null,
     Foreign Key (diningRoom) REFERENCES diningRoom(num)
 )
@@ -56,7 +58,7 @@ create table employee(
     firstName VARCHAR(20) not null,
     middleName VARCHAR(20) not null,
     lastName VARCHAR(20) null,
-    tel int null,
+    tel VARCHAR(10),
     email VARCHAR(30) null UNIQUE,
     factory VARCHAR(8) not null, 
     jobPosition VARCHAR(5) not null,
@@ -213,16 +215,16 @@ FOREIGN KEY (menu_type) REFERENCES menu_type(num);
 
 
 INSERT INTO factory (code, name, tel, email, streetAddr, numAddr, colonyAddr, numberEmp, city) VALUES
-('FERROS', 'Ferros Inc', 6642588677, 'ferrostijuana@gmail.com', 'Brisa', 2, 'a',20,'TIJ'),
-('ACEROS', 'Aceros del Norte', 6641589814, 'acerosnorte@gmail.com', 'Reforma', 5,'b', 20, 'ENS'),
-('ALUMEX', 'Alumex Corp', 6643584872, 'aluminiosmexico@gmail.com','Insurgentes', 15,'c',20, 'TIJ'),
-('MADERB', 'Maderas Benitez', 6641651487, 'madebenitez@gmail.com', 'Las Rosas', 14,'d', 20, 'ROS'),
-('TEXTIL', 'Textiles SA', 6644585759, 'textilesssa@gmail.com','Alameda', 12 ,'e',20, 'MEX'),
-('PLASTI', 'Plastica Mex', 6646585478, 'plasticosmex123@gmail.com','Blvd. Diaz Ordaz', 10 ,'f',20,'TIJ'),
-('ELECTNO', 'Electro Nova', 6641243257, 'electronova142@gmail.com', 'Castaños', 54,'g',20, 'TIJ'),
-('MUEBLES', 'Muebles Elvia', 6631478799, 'muebleselvia@gmail.com', 'Colinas', 72,'h', 20, 'ENS'),
-('DULMEX', 'Dulmex Paletas', 6648498742, 'dulmexpaletas@gmail.com','Monterrey', 45,'i', 20, 'ROS'),
-('CMTNOR', 'CMT Norte', 6634228879, 'CMTNORTE@gmail.com', 'Jamaica', 54, 'j', 20, 'MEX');
+('FERROS', 'Ferros Inc', '6642588677', 'ferrostijuana@gmail.com', 'Brisa', 2, 'a',20,'TIJ'),
+('ACEROS', 'Aceros del Norte', '6641589814', 'acerosnorte@gmail.com', 'Reforma', 5,'b', 20, 'ENS'),
+('ALUMEX', 'Alumex Corp', '6643584872', 'aluminiosmexico@gmail.com','Insurgentes', 15,'c',20, 'TIJ'),
+('MADERB', 'Maderas Benitez', '6641651487', 'madebenitez@gmail.com', 'Las Rosas', 14,'d', 20, 'ROS'),
+('TEXTIL', 'Textiles SA', '6644585759', 'textilesssa@gmail.com','Alameda', 12 ,'e',20, 'MEX'),
+('PLASTI', 'Plastica Mex', '6646585478', 'plasticosmex123@gmail.com','Blvd. Diaz Ordaz', 10 ,'f',20,'TIJ'),
+('ELECTNO', 'Electro Nova', '6641243257', 'electronova142@gmail.com', 'Castaños', 54,'g',20, 'TIJ'),
+('MUEBLES', 'Muebles Elvia', '6631478799', 'muebleselvia@gmail.com', 'Colinas', 72,'h', 20, 'ENS'),
+('DULMEX', 'Dulmex Paletas', '6648498742', 'dulmexpaletas@gmail.com','Monterrey', 45,'i', 20, 'ROS'),
+('CMTNOR', 'CMT Norte', '6634228879', 'CMTNORTE@gmail.com', 'Jamaica', 54, 'j', 20, 'MEX');
 
 insert into city(code, name) VALUES
 ("TIJ","Tijuana"),
@@ -468,6 +470,11 @@ VALUES ('miguel.Cerezo@gmail.com', 'contRAdePRUEBA0205', 'employee');
 INSERT INTO users(email, hash_password, rol)
 VALUES ('armando.Rincón@gmail.com', 'contRAdePRUEBA111', 'employee');
 
+insert into users
+values(null,'Javier.Diaz@gamil.com', 'contra1234', 'generalManager')
+
+insert into users
+values(null,'julio.Camejo@gmail.com', 'contra12345', 'dinningRoomManager')
 
 select * from users
 
@@ -480,7 +487,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES 
 (code,description);
 
-select * from employee
+
 
 insert into diningRoom(name, ubication, factory)
 VALUES
@@ -503,17 +510,171 @@ values(500, '2024-10-02', 1, 'carne' )
 insert into purchaseorder(amountPayment, datePurs, diningroommanager, supplier)
 values(420, '2024-10-02', 3, 'carne')
 
+insert into dish values ('PSTAL',  'Pasta Alfredo', 'Pasta Alfredo con champiñones, espinacas y queso parmesano',
+65, 0.1,'ECN','DESYN' )
 
+
+/*ALTERS TABLE XD*/
 ALTER TABLE purchaseOrder
 ADD CONSTRAINT diningroommanager
 FOREIGN KEY (diningroommanager) REFERENCES diningroommanager(num);
+
+ALTER TABLE employee
+ADD COLUMN userNum int
+
+ALTER TABLE employee
+ADD CONSTRAINT userNum
+FOREIGN KEY (userNum) REFERENCES users(num);
+
+ALTER TABLE diningroommanager
+ADD COLUMN userNumber int not null
+
+UPDATE diningroommanager
+set `userNumber` = 5
+where num = 1
+
+ALTER TABLE diningroommanager
+ADD CONSTRAINT userNumber
+FOREIGN KEY (userNumber) REFERENCES users(num);
+
+ALTER TABLE factoryadmin
+ADD COLUMN user_num int not null
+
+UPDATE factoryadmin
+set `user_num` = 6
+where num = 1
+
+ALTER TABLE factory
+MODIFY tel varchar(10);
+
+delete from factoryadmin where num BETWEEN 2 and 10
+-- chale
+
+ALTER TABLE factoryadmin
+ADD CONSTRAINT user_num
+FOREIGN KEY (user_num) REFERENCES users(num)
+
+select * from factory
+
+select * from users 
+
+desc factoryadmin
+
+ALTER TABLE dish
+MODIFY COLUMN description VARCHAR(100)
+
+
+insert into ingredients(name, experitionDate)
+values('Pechuga de pollo', '2024-10-20'),
+('Aguacate', '2024-10-15'),
+('Espinaca', '2024-20-11')
+
+insert into ingred_purcha(ingredients, purchaseOrder, numberIngred)
+values
+(3, 7, 8 ),
+(4, 7, 11),
+
+select * from ingred_purcha where `purchaseOrder` = 7
+
+/**INSERT A MENU, category y dish para la interfaz de crear platillo**/
+insert into category(code, name) VALUES
+("PRM", "Premium"),
+("EST", "Estándar"),
+("ECN", "Económica");
+
+insert into menu_type(description, start_time, end_time)
+values ('Matutino', '6:30:00','11:00:00');
+
+insert into menu(code, name, description, menu_type)
+values('DESYN', 'Desayunos', 'Desayunos energizantes para empezar el día', 1);
 
 /* --- SELECTS GENERALES*/
 
 /*consulta de prueba*/
 
-select d.firstName, p.amountPayment
-from purchaseorder as p
-INNER join diningroommanager as d on p.diningroommanager = d.num
-where d.num = 1
+/** VISTAS **/
 
+--1. Vista para mostrar info. de las ordenes de los gerentes generales hacia los proveedores.
+create view pruchaseOrderInfo as
+select CONCAT(d.firstName, " ", d.middleName, " ", d.lastName) as dining_room_manager,
+p.amountPayment as amount_payment, p.num as purchase_number, p.datePurs as purchase_date,
+ip.numberIngred as 'amount of ingredients', i.name as 'ingredient'
+from purchaseorder as p
+INNER JOIN diningroommanager as d on p.diningroommanager = d.num
+INNER JOIN ingred_purcha as ip on p.num = ip.purchaseOrder
+INNER JOIN ingredients as i on ip.ingredients = i.num
+
+--2. Vista para mostrar los ingredientes en almacen y el proveedor del que fueron comprados
+
+create view orderXsupplier as
+SELECT ip.purchaseOrder as order_number, ing.name as ingredient, p.datePurs, sp.name, sp.email as supplier_email
+FROM ingred_purcha as ip
+INNER JOIN purchaseorder as p on p.num = ip.purchaseOrder
+INNER JOIN supplier as sp on sp.code = p.supplier
+INNER JOIN ingredients as ing on ing.num = ip.ingredients
+group by ip.purchaseOrder
+
+select * from employee where email = 'armando.Rincón@gmail.com'
+
+--3. Vista para mostrar la informacion de un platillo
+
+SELECT d.name, d.description, d.price, d.discountPercentage as discount, c.name as category
+FROM dish as d
+INNER JOIN category as c on c.code = d.category
+
+-- 4. Vista para mostrar la informacion del usuario
+
+/**PROCEDIMIENTOS ALMACENADOS*/
+
+insert into factory
+values('ARTI', 'Artifacts', '6641580188', 'artifacts@gmail.com', 'vallecito', 50, 'Villa God', 10, (select code from city
+where name = 'Tijuana')
+)
+
+delete from factory where code = 'ARTI'
+
+SELECT * FROM factory
+
+
+drop procedure `insertFactory`
+
+select * from city
+
+select code from city
+where name = 'Ensenada'
+
+SHOW FULL COLUMNS FROM city WHERE Field = 'name';
+
+
+drop procedure createfactory
+
+DELIMITER $$
+create procedure createfactory(
+    IN f_code varchar(8),
+    IN f_name varchar(16),
+    IN f_tel varchar(10),
+    IN f_email varchar(25),
+    IN f_street varchar(15),
+    IN f_numAddr int,
+    IN f_colony varchar(20),
+    IN f_Emps int,
+    IN cityName VARCHAR(20)
+)
+BEGIN
+
+set @citycode = (SELECT code from city where name = cityName);
+IF @citycode IS NOT NULL THEN
+select @citycode;
+insert into factory(code, name, tel, email, streetAddr, numAddr, colonyAddr, numberEmp, city)
+values( f_code, f_name, f_tel, f_email, f_street, f_numAddr, f_colony, f_Emps, @citycode);
+    ELSE
+        SELECT 'NO JALA';
+END IF;
+
+end $$
+
+CALL createfactory('SELOG', 'SELOFANES GOMEZ', '664125441', 'selofs@gmail.com', 'valles', 47, 'agua azul', 10, 'Mexicali')
+
+SELECT * FROM factory
+
+SELECT @@SESSION.sql_mode;
